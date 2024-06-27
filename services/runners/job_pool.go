@@ -294,10 +294,14 @@ func (p *JobPool) tryRegisterRunner() bool {
 	configBytes, err := json.Marshal(config)
 
 	if err != nil {
-		panic("cannot save runner config")
+		panic("cannot parse runner config")
 	}
 
 	err = os.WriteFile(util.Config.Runner.ConfigFile, configBytes, 0644)
+
+	if err != nil {
+		panic("cannot save runner config")
+	}
 
 	p.config = &config
 
